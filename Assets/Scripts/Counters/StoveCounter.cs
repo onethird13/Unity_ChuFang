@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class StoveCounter : BaseCounter
 {
+   
     [SerializeField] private FryingRecipeSO[]  fryingRecipeArray;
     private float maxFryingTime;
     public override void Interact(Player player)
@@ -91,5 +92,4 @@ public class StoveCounter : BaseCounter
         return null;
     }
 }
-// 做好了牛排放上，煎熟。但是不能拿下来
-//todo 把牛排放上煎好封装成一个方法，加上拿下来的功能，加上UI
+
