@@ -14,33 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1778662250
+  lastShownTimestamp: 1778918892
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1778662250
+  checkedLastUpdateTimestamp: 1778918892
   lastQOTDResponse:
-    questionId: 301
-    questionText: What is JSON and what is it useful for?
-    answerA: JavaScript Over Node, programming pattern
-    answerB: JavaScript Object Notation, data format
-    answerC: Jumping-Signal Over Nonce, crypto concept
+    questionId: 302
+    questionText: 'Is this valid code?
+
+      <p>Color? myColor = null;</p>'
+    answerA: Yes
+    answerB: No, myColor is a struct and cannot be null
+    answerC: 
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1778662250
+  lastQotdTimestamp: 1778918892
   lastDynamicHeaderResponse:
-    topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/gameDevPracticeLab_2.png
-    topText: Weekly Game Mechanic Challenges to help you learn by DOING!
-    topLink: practicelab
-    bottomText: My 10+ Years of C# Knowledge in 1 Course!
-    bottomLink: csharpcourse
-  lastDynamicHeaderTimestamp: 1778662250
+    topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/unityBundleMay26MustHave.png
+    topText: The BEST Unity Bundle in ages! Includes my most recommended asset 94%
+      OFF!
+    topLink: assetstore
+    bottomText: Get 98% OFF on awesome REALISTIC HumbleBundle!
+    bottomLink: humblebundle
+  lastDynamicHeaderTimestamp: 1778918892
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1778662250
+  websiteLatestMessageTimestamp: 1778918892
   websiteLatestVideos:
     videos:
+    - youTubeId: Fb5d_46JfVI
+      title: What are Unity Templates?
     - youTubeId: pV-tmNmJFjY
       title: Unity's AI Tools are GENUINELY useful!
     - youTubeId: _7ACFqhnxTw
@@ -48,6 +53,4 @@ MonoBehaviour:
         (Learn by DOING!)
     - youTubeId: 546J2n9Sn5o
       title: The MOST AWESOME Unity Bundle is HERE! 94% OFF!
-    - youTubeId: _WB6Ui5XeH0
-      title: The 10 SECRETS to making BETTER games!
-  websiteLatestVideosTimestamp: 1778662250
+  websiteLatestVideosTimestamp: 1778918892

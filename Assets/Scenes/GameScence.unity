@@ -253,22 +253,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoveCounter
       objectReference: {fileID: 0}
-    - target: {fileID: 9155873645298612863, guid: e878b31fdc6b403469152bd0361d54a6,
-        type: 3}
-      propertyPath: counterTopPoint
-      value: 
-      objectReference: {fileID: 2064432191}
-    - target: {fileID: 9155873645298612863, guid: e878b31fdc6b403469152bd0361d54a6,
-        type: 3}
-      propertyPath: fryingRecipeArray.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9155873645298612863, guid: e878b31fdc6b403469152bd0361d54a6,
-        type: 3}
-      propertyPath: fryingRecipeArray.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 869cab3e678b0194abc0b2919baca281,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2310,12 +2294,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e814bda9652045846bc396139762b01c, type: 3}
---- !u!4 &2064432191 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7089844014265492443, guid: e878b31fdc6b403469152bd0361d54a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 22680669}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2134415574
 GameObject:
   m_ObjectHideFlags: 0
