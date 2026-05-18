@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class StoveCounter : BaseCounter
 {
-    [SerializeField]
-    private FryingRecipeSO[] fryingRecipeArray;
+    [SerializeField] private FryingRecipeSO[] fryingRecipeArray;
 
     private float fryingTimer;
     private FryingRecipeSO fryingRecipe;
 
     private void Update()
     {
-        if (HasKitchenObject() && 
-            GetOutputForInput(GetKitchenObject().getKitchenObjectSO())!=null)
+        if (HasKitchenObject() &&
+            GetOutputForInput(GetKitchenObject().getKitchenObjectSO()) != null)
         {
             Debug.Log(GetOutputForInput(GetKitchenObject().getKitchenObjectSO()));
             fryingTimer += Time.deltaTime;
@@ -23,7 +22,7 @@ public class StoveCounter : BaseCounter
             if (fryingTimer > fryingRecipeSO.maxFryingTime)
             {
                 GetKitchenObject().DestroySelf();
-                KitchenObject.CreateKitchenObject(fryingRecipeSO.output,this);
+                KitchenObject.CreateKitchenObject(fryingRecipeSO.output, this);
                 fryingTimer = 0f;
                 Debug.Log("fried");
             }
@@ -32,16 +31,17 @@ public class StoveCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-       
+
         if (!HasKitchenObject())
         {
             //there is no kitchen object here
             if (player.HasKitchenObject())
             {
-                if (GetOutputForInput(player.GetKitchenObject().getKitchenObjectSO())==null)
+                if (GetOutputForInput(player.GetKitchenObject().getKitchenObjectSO()) == null)
                 {
                     return;
                 }
+
                 //player has a kitchen object
                 player.GetKitchenObject().SetKitchenObjectParent(this);
             }
@@ -50,7 +50,7 @@ public class StoveCounter : BaseCounter
         {
             //there has a kitchen object
             if (player.HasKitchenObject())
-            { 
+            {
                 //player has a kitchen object
             }
             else
@@ -61,40 +61,49 @@ public class StoveCounter : BaseCounter
             }
         }
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     private KitchObjectSO GetOutputForInput(KitchObjectSO inputKitchenObjectSO)
     {
         if (GetFryingRecipeForInput(inputKitchenObjectSO) == null)
         {
             return null;
         }
+
         FryingRecipeSO cuttingRecipe = GetFryingRecipeForInput(inputKitchenObjectSO);
         return cuttingRecipe.output;
     }
 
     private bool HasRecipeForInput(KitchObjectSO inputKitchenObjectSO)
     {
-        FryingRecipeSO fryingRecipe= GetFryingRecipeForInput(inputKitchenObjectSO);
+        FryingRecipeSO fryingRecipe = GetFryingRecipeForInput(inputKitchenObjectSO);
         if (fryingRecipe != null)
         {
             return true;
         }
+
         return false;
     }
 
     private FryingRecipeSO GetFryingRecipeForInput(KitchObjectSO inputKitchenObjectSO)
     {
+        Debug.Log("Looking for recipe for: " + inputKitchenObjectSO.name + ", ID: " +
+                  inputKitchenObjectSO.GetInstanceID());
+
         foreach (var f in fryingRecipeArray)
         {
+            Debug.Log("Checking recipe: input=" + f.input.name + ", ID=" + f.input.GetInstanceID());
+            Debug.Log("Match? " + (inputKitchenObjectSO == f.input));
+
             if (inputKitchenObjectSO == f.input)
             {
                 return f;
             }
         }
+
         return null;
     }
 }
