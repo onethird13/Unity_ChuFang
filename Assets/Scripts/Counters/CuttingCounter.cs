@@ -19,9 +19,7 @@ public class CuttingCounter : BaseCounter
     
 
     private int cuttingProgress;
-
-  
-
+    
     public override void Interact(Player player)
     {
         cuttingProgress = 0;
