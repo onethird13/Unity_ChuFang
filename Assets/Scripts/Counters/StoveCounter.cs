@@ -5,64 +5,45 @@ using UnityEngine;
 
 public class StoveCounter : BaseCounter
 {
-    [SerializeField] private FryingRecipeSO[]  fryingRecipeArray;
-    public event EventHandler<FryingStatusChangedEventArgs> FryingStatusChanged;
-    public class FryingStatusChangedEventArgs : EventArgs
-    {
-        public bool isFinshed;
-    }
+    [SerializeField]
+    private FryingRecipeSO[] fryingRecipeArray;
 
-   
-    private bool isFinished;
+    private float fryingTimer;
+    private FryingRecipeSO fryingRecipe;
 
-    private void Awake()
+    private void Update()
     {
-        FryingStatusChanged += OnFryingStatusChanged;
-    }
-
-    private void OnFryingStatusChanged(object sender, EventArgs e)
-    {
-        if (!isFinished)
+        if (HasKitchenObject() && 
+            GetOutputForInput(GetKitchenObject().getKitchenObjectSO())!=null)
         {
-            FinishFrying(GetKitchenObject().getKitchenObjectSO());
-            isFinished = true;
-            StartCoroutine(FryingTimer(GetFryingRecipeForInput(GetKitchenObject()
-                .getKitchenObjectSO()).maxFryingTime));
-        }
-        else
-        {
-            Burned(GetKitchenObject().getKitchenObjectSO());
+            Debug.Log(GetOutputForInput(GetKitchenObject().getKitchenObjectSO()));
+            fryingTimer += Time.deltaTime;
+            FryingRecipeSO fryingRecipeSO = GetFryingRecipeForInput(GetKitchenObject().getKitchenObjectSO());
+            Debug.Log("frying");
+            if (fryingTimer > fryingRecipeSO.maxFryingTime)
+            {
+                GetKitchenObject().DestroySelf();
+                KitchenObject.CreateKitchenObject(fryingRecipeSO.output,this);
+                fryingTimer = 0f;
+                Debug.Log("fried");
+            }
         }
     }
 
-    IEnumerator FryingTimer(float time)
-    {
-        yield return new WaitForSeconds(time);
-        FryingStatusChanged?.Invoke(this,new FryingStatusChangedEventArgs()
-        {
-            isFinshed = this.isFinished,
-        } );
-    }
-    
     public override void Interact(Player player)
     {
-        
        
         if (!HasKitchenObject())
         {
             //there is no kitchen object here
             if (player.HasKitchenObject())
             {
-                //如果不在recipe里就直接return
                 if (GetOutputForInput(player.GetKitchenObject().getKitchenObjectSO())==null)
                 {
                     return;
                 }
                 //player has a kitchen object
                 player.GetKitchenObject().SetKitchenObjectParent(this);
-                isFinished = false;
-                StartCoroutine(FryingTimer(GetFryingRecipeForInput(GetKitchenObject().
-                    getKitchenObjectSO()).maxFryingTime));
             }
         }
         else
@@ -74,49 +55,17 @@ public class StoveCounter : BaseCounter
             }
             else
             {
-                //player don't have a kitchen object
+                //player dont have a kitchen object
                 //we need to give this kitchen object to player
                 GetKitchenObject().SetKitchenObjectParent(player);
-                isFinished = false;
-                StopAllCoroutines();
             }
         }
-        
-        
     }
     
-    //烤熟了
-    private void FinishFrying(KitchObjectSO kitchenObjectSO)
-    {
-        KitchObjectSO tempKitchenObjectSO = GetOutputForInput(kitchenObjectSO) ;
-        this.GetKitchenObject().DestroySelf();
-        KitchenObject.CreateKitchenObject(tempKitchenObjectSO,this);
-    }
-    //烤糊了
-    private void Burned(KitchObjectSO kitchenObjectSO)
-    {
-        Debug.Log("Burned");
-        KitchObjectSO tempKitchenObjectSO = GetOutputForInput(kitchenObjectSO) ;
-        this.GetKitchenObject().DestroySelf();
-        Debug.Log("destroyed");
-        KitchenObject.CreateKitchenObject(tempKitchenObjectSO, this);
-
-    }
-
     
-    //判断输入是否在配方里
-    private bool IsInputObjectInRecipes(KitchObjectSO kitchenObjectSO)
-    {
-        foreach (var f in fryingRecipeArray)
-        {
-            if (f.input == kitchenObjectSO)
-            {
-                return true;
-            }
-        }        
-        return false;
-    }
-
+    
+    
+    
     private KitchObjectSO GetOutputForInput(KitchObjectSO inputKitchenObjectSO)
     {
         if (GetFryingRecipeForInput(inputKitchenObjectSO) == null)
@@ -127,21 +76,19 @@ public class StoveCounter : BaseCounter
         return cuttingRecipe.output;
     }
 
-    
     private bool HasRecipeForInput(KitchObjectSO inputKitchenObjectSO)
     {
-        FryingRecipeSO cuttingRecipe= GetFryingRecipeForInput(inputKitchenObjectSO);
-        if (cuttingRecipe != null)
+        FryingRecipeSO fryingRecipe= GetFryingRecipeForInput(inputKitchenObjectSO);
+        if (fryingRecipe != null)
         {
             return true;
         }
         return false;
     }
-    
 
     private FryingRecipeSO GetFryingRecipeForInput(KitchObjectSO inputKitchenObjectSO)
     {
-        foreach (var f in fryingRecipeArray )
+        foreach (var f in fryingRecipeArray)
         {
             if (inputKitchenObjectSO == f.input)
             {
@@ -151,5 +98,3 @@ public class StoveCounter : BaseCounter
         return null;
     }
 }
-// 做好了牛排放上，煎熟。但是不能拿下来
-//todo 把牛排放上煎好封装成一个方法，加上拿下来的功能，加上UI
