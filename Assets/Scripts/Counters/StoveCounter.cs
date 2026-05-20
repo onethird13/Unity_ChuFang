@@ -1,33 +1,69 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StoveCounter : BaseCounter
 {
     [SerializeField]
     private FryingRecipeSO[] fryingRecipeArray;
-
+    [SerializeField]
+    private BurningRecipeSO[] burningRecipeArray;
     private float fryingTimer;
-    private FryingRecipeSO fryingRecipe;
+    private FryingRecipeSO fryingRecipeSO;
+    private BurningRecipeSO burningRecipeSO;
+    private State state;
+    private float burningTimer;
+    
+    private enum State
+    {
+        Idle,
+        Frying,
+        Fried,
+        Burned
+    }
 
     private void Update()
     {
-        if (HasKitchenObject() && 
-            GetOutputForInput(GetKitchenObject().getKitchenObjectSO())!=null)
+        switch (state)
         {
-            Debug.Log(GetOutputForInput(GetKitchenObject().getKitchenObjectSO()));
-            fryingTimer += Time.deltaTime;
-            FryingRecipeSO fryingRecipeSO = GetFryingRecipeForInput(GetKitchenObject().getKitchenObjectSO());
-            Debug.Log("frying");
-            if (fryingTimer > fryingRecipeSO.maxFryingTime)
-            {
-                GetKitchenObject().DestroySelf();
-                KitchenObject.CreateKitchenObject(fryingRecipeSO.output,this);
-                fryingTimer = 0f;
-                Debug.Log("fried");
-            }
+            case State.Idle:
+                break;
+            case State.Frying:
+                if (HasKitchenObject() && 
+                    GetOutputForInput(GetKitchenObject().getKitchenObjectSO())!=null)
+                {
+                    fryingTimer += Time.deltaTime;
+                 
+                    if (fryingTimer > fryingRecipeSO.maxFryingTime)
+                    {
+                        GetKitchenObject().DestroySelf();
+                        KitchenObject kitchenObject=  KitchenObject.CreateKitchenObject(fryingRecipeSO.output,this);
+                        fryingRecipeSO = GetFryingRecipeForInput(kitchenObject.getKitchenObjectSO());
+                     
+                        state = State.Fried;
+                        burningRecipeSO=GetBurningRecipeForInput(kitchenObject.getKitchenObjectSO());
+                        burningTimer = 0f;
+                        
+                    }
+                }
+                break;
+            case State.Fried:
+                burningTimer += Time.deltaTime;
+              
+                if (burningTimer > burningRecipeSO.maxBurningTime)
+                {
+                    GetKitchenObject().DestroySelf();
+                    KitchenObject kitchenObject=  KitchenObject.CreateKitchenObject(burningRecipeSO.output,this);
+                  
+                    state = State.Burned;
+                }
+                break;
+            case State.Burned:
+                break;
         }
+       
     }
 
     public override void Interact(Player player)
@@ -44,6 +80,9 @@ public class StoveCounter : BaseCounter
                 }
                 //player has a kitchen object
                 player.GetKitchenObject().SetKitchenObjectParent(this);
+                 fryingRecipeSO = GetFryingRecipeForInput(GetKitchenObject().getKitchenObjectSO());
+                 state = State.Frying;
+                 fryingTimer = 0f;
             }
         }
         else
@@ -58,6 +97,7 @@ public class StoveCounter : BaseCounter
                 //player dont have a kitchen object
                 //we need to give this kitchen object to player
                 GetKitchenObject().SetKitchenObjectParent(player);
+                state = State.Idle;
             }
         }
     }
@@ -93,6 +133,19 @@ public class StoveCounter : BaseCounter
             if (inputKitchenObjectSO == f.input)
             {
                 return f;
+            }
+        }
+        return null;
+    }
+    
+    
+    private BurningRecipeSO GetBurningRecipeForInput(KitchObjectSO inputKitchenObjectSO)
+    {
+        foreach (var b in burningRecipeArray)
+        {
+            if (inputKitchenObjectSO == b.input)
+            {
+                return b;
             }
         }
         return null;

@@ -413,4 +413,5 @@ MonoBehaviour:
   counterTopPoint: {fileID: 7089844014265492443}
   fryingRecipeArray:
   - {fileID: 11400000, guid: 869cab3e678b0194abc0b2919baca281, type: 2}
-  - {fileID: 11400000, guid: 51eedb99c874d5243b8d4c4886292ce7, type: 2}
+  burningRecipeArray:
+  - {fileID: 11400000, guid: 71105e1d9c72ee3418421836fb637e7d, type: 2}
