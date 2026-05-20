@@ -392,7 +392,7 @@ MonoBehaviour:
   cutKitchenObjectSOArray:
   - {fileID: 11400000, guid: 960286fe33216a4468d5b103b5d198f9, type: 2}
   - {fileID: 11400000, guid: bd17540c9c772e84582ddb6b155f4cc3, type: 2}
-  - {fileID: 11400000, guid: 4644be01e475b464f902d74802c49fc1, type: 2}
+  - {fileID: 11400000, guid: e7e099c782cb1fa4ba9e0d52f57b186d, type: 2}
 --- !u!4 &8504113156313091938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7994864205401078971, guid: 49bd18a6916790342a9d9bb3c577168a,
@@ -522,6 +522,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8504113156313091938}
     m_Modifications:
+    - target: {fileID: 2132876023720254017, guid: 72d5c65513f12e242b3899aa70adf754,
+        type: 3}
+      propertyPath: lookAtMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4000657062060905683, guid: 72d5c65513f12e242b3899aa70adf754,
         type: 3}
       propertyPath: m_Pivot.x
@@ -632,6 +637,11 @@ PrefabInstance:
       propertyPath: cuttingCounter
       value: 
       objectReference: {fileID: -3234073851805733743}
+    - target: {fileID: 8297298806896903735, guid: 72d5c65513f12e242b3899aa70adf754,
+        type: 3}
+      propertyPath: hasProgressObject
+      value: 
+      objectReference: {fileID: 1446903944069366066}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

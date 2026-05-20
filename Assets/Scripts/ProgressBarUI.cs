@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,16 +11,21 @@ public class ProgressBarUI : MonoBehaviour
     private Image barImage; 
         
     [SerializeField]
-    private CuttingCounter cuttingCounter;
-
+    private GameObject hasProgressObject;
+    private IHasProgress hasProgress;
     private void Start()
     {
-        cuttingCounter.onProgressChange += onProgressCHange_UI;
+        hasProgress = hasProgressObject.GetComponent<IHasProgress>();
+        if (hasProgress == null)
+        {
+            Debug.LogError(hasProgressObject.name + " has no IHasProgress(Interfance)");
+        }
+        hasProgress.onProgressChange += onProgressChange_UI;
         barImage.fillAmount = 0f;
         Hide();
     }
 
-    private void onProgressCHange_UI(object sender,CuttingCounter.OnProgressChangeArgs args)
+    private void onProgressChange_UI(object sender,IHasProgress.OnProgressChangeArgs args)
     {
         
         barImage.fillAmount = args.progressNormalized;

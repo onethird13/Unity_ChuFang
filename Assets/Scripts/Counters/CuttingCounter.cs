@@ -4,20 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter,IHasProgress
 {
     [FormerlySerializedAs("cutKitchenObjectArray")]
     [FormerlySerializedAs("cutKitchenObject")] 
     [SerializeField] private CuttingRecipeSO[] cutKitchenObjectSOArray;
-    public event EventHandler<OnProgressChangeArgs> onProgressChange;
+
+    public event EventHandler<IHasProgress.OnProgressChangeArgs> onProgressChange;
     public event EventHandler onCut;
-
-    public class OnProgressChangeArgs : EventArgs
-    {
-        public float progressNormalized;
-    }
-    
-
     private int cuttingProgress;
     
     public override void Interact(Player player)
@@ -48,6 +42,10 @@ public class CuttingCounter : BaseCounter
                 //player dont have a kitchen object
                 //we need to give this kitchen object to player
                 GetKitchenObject().SetKitchenObjectParent(player);
+                onProgressChange?.Invoke(this, new IHasProgress.OnProgressChangeArgs()
+                {
+                    progressNormalized = 1f
+                });
             }
         }
     }
@@ -63,7 +61,7 @@ public class CuttingCounter : BaseCounter
             cuttingProgress++;
             onCut?.Invoke(this,EventArgs.Empty);
             
-            onProgressChange?.Invoke(this, new OnProgressChangeArgs()
+            onProgressChange?.Invoke(this, new IHasProgress.OnProgressChangeArgs()
             {
                 progressNormalized = (float)cuttingProgress/(cuttingRecipeSo.maxCuttingProgress)
             });
@@ -113,7 +111,7 @@ public class CuttingCounter : BaseCounter
     {
         foreach (var c in cutKitchenObjectSOArray)
         {
-            if (inputKitchenObjectSO == c.input)
+            if (inputKitchenObjectSO!=null&& inputKitchenObjectSO == c.input)
             {
                 return c;
             }
