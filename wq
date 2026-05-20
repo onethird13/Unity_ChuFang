@@ -1,0 +1,85 @@
+[33mcommit 00af65583bcdf11f8c8af1b169489c504e9bb3da[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: asus <j29877936@163.com>
+Date:   Wed May 20 16:17:38 2026 +0800
+
+    修复了一些已知问题
+
+[33mcommit 6c8cd1d81aa2f81f2ddb3c4c198995b1e6b4d8d7[m
+Author: asus <j29877936@163.com>
+Date:   Wed May 20 15:00:13 2026 +0800
+
+    增加了stovecounter的UI条
+
+[33mcommit c1d94399b3e95b81514dbd2a0ae810ccecb49f8e[m
+Author: asus <j29877936@163.com>
+Date:   Wed May 20 13:13:17 2026 +0800
+
+    添加版本管理文件
+
+[33mcommit 4bf83a4f9fa6ffbfc27fe47d27fc8472b50a5d6c[m
+Author: asus <j29877936@163.com>
+Date:   Wed May 20 13:12:13 2026 +0800
+
+    完成了stoveCounter的粒子和燃烧视觉处理
+
+[33mcommit dfabdb1e4cec7ce2094792b1c0878347257381f9[m
+Author: asus <j29877936@163.com>
+Date:   Wed May 20 10:49:40 2026 +0800
+
+    完成了stovecounter的对食物处理工作
+
+[33mcommit a47dab24e8bb920cf463a7ccb1e031369d206b52[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 18:51:50 2026 +0800
+
+    Revert "修bug版本"
+    
+    This reverts commit 42e920e1
+
+[33mcommit 6c91d605073eb34edb12d4b9f7ff2c191bd19c7b[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 18:49:40 2026 +0800
+
+    Revert "原版本"
+    
+    This reverts commit 3007f473
+
+[33mcommit 42e920e1cea9c636723bbb91de65dbef2bb610ab[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 18:48:46 2026 +0800
+
+    修bug版本
+
+[33mcommit 3007f4736c043f2fb82ac2efcf17be22bb48e5d7[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 18:43:47 2026 +0800
+
+    原版本
+
+[33mcommit 4727ead8dabcfb4effd3436b6a09a1856aa05386[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 17:53:56 2026 +0800
+
+    Revert "删掉todo"
+    
+    This reverts commit f22b2ad7050f9477bbe2bf8808b7b1b1afe1dbd8.
+    
+    回退到没有编辑stoveCounter的版本
+
+[33mcommit 2382396796793f3050cbd787a1becb367b75bf99[m
+Author: asus <j29877936@163.com>
+Date:   Mon May 18 17:23:03 2026 +0800
+
+    添加了计时器和燃烧处理
+
+[33mcommit f22b2ad7050f9477bbe2bf8808b7b1b1afe1dbd8[m
+Author: asus <j29877936@163.com>
+Date:   Thu May 14 15:50:17 2026 +0800
+
+    删掉todo
+
+[33mcommit 65fb514190607009d578d57de1506f9c60ffc53f[m
+Author: asus <j29877936@163.com>
+Date:   Thu May 14 15:36:50 2026 +0800
+
+    1
