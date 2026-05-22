@@ -36,10 +36,21 @@ public class CuttingCounter : BaseCounter,IHasProgress
             if (player.HasKitchenObject())
             { 
                 //player has a kitchen object
+                if (player.GetKitchenObject() is PlateKitchenObject)
+                {
+                    //player手上拿着plate,此时应把kitchen object销毁，在plate kitchen object 里的列表加上相应类型的SO
+                    PlateKitchenObject plateKitchenObject=player.GetKitchenObject() as PlateKitchenObject;
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().getKitchenObjectSO()))
+                    {
+                        GetKitchenObject().DestroySelf();    
+                    }
+                    
+                    
+                }
             }
             else
             {
-                //player dont have a kitchen object
+                //player don't have a kitchen object
                 //we need to give this kitchen object to player
                 GetKitchenObject().SetKitchenObjectParent(player);
                 onProgressChange?.Invoke(this, new IHasProgress.OnProgressChangeArgs()
@@ -52,7 +63,6 @@ public class CuttingCounter : BaseCounter,IHasProgress
 
     public override void InteractAlternate(Player player)
     {
-
         //check is player has a kitchen object &&
         //check is there any recipe for input
         if (HasKitchenObject() && HasRecipeForInput(GetKitchenObject().getKitchenObjectSO()))
@@ -70,7 +80,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
             if (cuttingProgress >= cuttingRecipeSo.maxCuttingProgress)
             {
                 //save a cutting kitchen obj for the kitchen obj which be put on the cutting counter 
-                KitchObjectSO cuttingKitchenObjectSO = GetOutputForInput(GetKitchenObject().getKitchenObjectSO());
+                KitchenObjectSO cuttingKitchenObjectSO = GetOutputForInput(GetKitchenObject().getKitchenObjectSO());
                 //destroy the original kitchen object
                 GetKitchenObject().DestroySelf();
                 //and create a new one but sliced
@@ -87,7 +97,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
            
     }
     
-    private KitchObjectSO GetOutputForInput(KitchObjectSO inputKitchenObjectSO)
+    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO)
     {
         if (GetCuttingRecipeForInput(inputKitchenObjectSO) == null)
         {
@@ -97,7 +107,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
         return cuttingRecipe.output;
     }
 
-    private bool HasRecipeForInput(KitchObjectSO inputKitchenObjectSO)
+    private bool HasRecipeForInput(KitchenObjectSO inputKitchenObjectSO)
     {
         CuttingRecipeSO cuttingRecipe= GetCuttingRecipeForInput(inputKitchenObjectSO);
         if (cuttingRecipe != null)
@@ -107,7 +117,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
         return false;
     }
 
-    private CuttingRecipeSO GetCuttingRecipeForInput(KitchObjectSO inputKitchenObjectSO)
+    private CuttingRecipeSO GetCuttingRecipeForInput(KitchenObjectSO inputKitchenObjectSO)
     {
         foreach (var c in cutKitchenObjectSOArray)
         {

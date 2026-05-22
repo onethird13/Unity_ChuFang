@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class KitchenObject : MonoBehaviour
 {
-   [SerializeField] private KitchObjectSO kitchenObjectSO;
+   [SerializeField] private KitchenObjectSO kitchenObjectSO;
    private IKitchenObjectParent kitchenObjectParent;
-   public KitchObjectSO getKitchenObjectSO()
+   public KitchenObjectSO getKitchenObjectSO()
    {
       return kitchenObjectSO;
    }
@@ -38,9 +38,9 @@ public class KitchenObject : MonoBehaviour
       kitchenObjectParent.ClearKitchenObject();
       Destroy(gameObject);
    }
-
-
-   public static KitchenObject CreateKitchenObject(KitchObjectSO kitchenObjectSO,
+   
+   
+   public static KitchenObject  CreateKitchenObject(KitchenObjectSO kitchenObjectSO,
       IKitchenObjectParent kitchenObjectParent)
    {
       Transform kitchenObjectTransform= Instantiate(kitchenObjectSO.prefab );
@@ -48,5 +48,16 @@ public class KitchenObject : MonoBehaviour
       kitchenObject.SetKitchenObjectParent(kitchenObjectParent);
 
       return kitchenObject;
+   }
+
+   public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
+   {
+      if (this is PlateKitchenObject)
+      {
+         plateKitchenObject = this as PlateKitchenObject;
+         return true;
+      }
+      plateKitchenObject = null;
+      return false;
    }
 }

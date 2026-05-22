@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ContainerCounter : BaseCounter
 {
-   [SerializeField] private KitchObjectSO kitchenObjectSO;
+   [SerializeField] private KitchenObjectSO kitchenObjectSO;
    
    public event EventHandler OnPLayerGrabobject;
   

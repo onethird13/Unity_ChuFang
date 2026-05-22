@@ -7,7 +7,7 @@ public class PlateCounter : BaseCounter
 {
     private float spawnPlateTimer;
     private float maxSpawnTime;
-    [SerializeField] private KitchObjectSO plateSO;
+    [SerializeField] private KitchenObjectSO plateSO;
     public event EventHandler OnPlateSpawned;
     public event EventHandler OnPlateRemoved;
     [FormerlySerializedAs("plateAmount")] public float plateCount;
