@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ContainerCounterVisual : MonoBehaviour
-{
+{   
     [SerializeField] private ContainerCounter ContainerCounter;
     [SerializeField] private Animator ContainerCounterAnimator;
     private const string OPEN_CLOSE="OpenClose";

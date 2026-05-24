@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class DeliveryManager : MonoBehaviour
 {
     public static DeliveryManager Instance{get; private set;}
-    
+    public event EventHandler OnRecipeSpawned;
+    public event EventHandler OnRecipeCompleted;
     
     
     [SerializeField]
@@ -23,12 +27,17 @@ public class DeliveryManager : MonoBehaviour
 
     private void Update()
     {
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnTimerMax &&  waitingRecipeSOList.Count<4 )
+        if ( waitingRecipeSOList.Count<4)
+        {
+            spawnTimer += Time.deltaTime;
+        }
+      
+        if (spawnTimer >= spawnTimerMax   )
         {
             spawnTimer = 0f;
-            RecipeSO waitingRecipeSO = recipeSOList.RecipeSOList[Random.Range(0, recipeSOList.RecipeSOList.Count)];
+            RecipeSO waitingRecipeSO = recipeSOList.RecipeSOList[UnityEngine.Random.Range(0, recipeSOList.RecipeSOList.Count)];
             waitingRecipeSOList.Add(waitingRecipeSO);
+            OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
             Debug.Log(waitingRecipeSO);
         }
     }
@@ -92,6 +101,7 @@ public class DeliveryManager : MonoBehaviour
                 waitingRecipeSOList.RemoveAt(i);
                 plateKitchenObject.DestroySelf();
                 Debug.Log("玩家传入了正确的食物");
+                OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                 return;
             }
             else
@@ -105,6 +115,11 @@ public class DeliveryManager : MonoBehaviour
 
         Debug.Log("没匹配到");
         
+    }
+
+    public List<RecipeSO> GetWatingRecipe()
+    {
+        return  waitingRecipeSOList;
     }
    
 }
