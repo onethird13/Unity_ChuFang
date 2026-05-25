@@ -60,7 +60,7 @@ public class PlateCounter : BaseCounter
         else
         {
             //玩家手里没东西
-            if (plateCount>=0)
+            if (plateCount>0)
             {
                 //台子上有东西
                 KitchenObject.CreateKitchenObject(plateSO, player);

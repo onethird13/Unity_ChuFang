@@ -11,6 +11,11 @@ using UnityEngine.Serialization;
 /// </summary>
 public class Player : MonoBehaviour,IKitchenObjectParent
 {
+  
+
+   
+    public event EventHandler OnPickup; 
+    
     /// <summary>
     /// 单例实例，方便全局访问玩家对象。
     /// </summary>
@@ -202,6 +207,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
             {
                 //可以，那移动方向就是x
                 moveDirection=new Vector3(moveDirection.x, 0, 0);
+               
                 /*Debug.Log("在x移动");*/
             }
             else
@@ -213,6 +219,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
                 {
                     //意味着可以在z移动，方向就是z
                     moveDirection=new Vector3(0, 0, moveDirection.z);
+                   
                     /*Debug.Log("z can move");*/
                 }
                 else
@@ -227,7 +234,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
         }
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime*rotateSpeed);
         isWalking = (moveDirection != Vector3.zero);
-
+        
     }
 
     /// <summary>
@@ -236,6 +243,10 @@ public class Player : MonoBehaviour,IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+        if (this.kitchenObject != null)
+        {
+            OnPickup?.Invoke(this,EventArgs.Empty);
+        }
     }
 
     /// <summary>
