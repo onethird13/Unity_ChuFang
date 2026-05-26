@@ -18,9 +18,11 @@ public class DeliveryManager : MonoBehaviour
     private List<RecipeSO> waitingRecipeSOList;
     private float spawnTimer;
     private float spawnTimerMax;
+    private float recipeDeliveredAmount;
 
     private void Awake()
     {
+        recipeDeliveredAmount = 0;
         Instance = this;
         spawnTimerMax = 3f;
         waitingRecipeSOList = new List<RecipeSO>();
@@ -104,6 +106,7 @@ public class DeliveryManager : MonoBehaviour
                 Debug.Log("玩家传入了正确的食物");
                 OnRecipeSuccessed?.Invoke(this, EventArgs.Empty);
                 OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
+                recipeDeliveredAmount++;
                 return;
             }
             else
@@ -123,5 +126,9 @@ public class DeliveryManager : MonoBehaviour
     {
         return  waitingRecipeSOList;
     }
-   
+
+    public float GetRecipeDeliveredAmount()
+    {
+        return recipeDeliveredAmount;
+    }
 }

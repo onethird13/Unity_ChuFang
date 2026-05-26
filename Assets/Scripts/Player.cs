@@ -97,18 +97,25 @@ public class Player : MonoBehaviour,IKitchenObjectParent
 
     private void OnInteractAlternateAction(object sender,EventArgs args)
     {
+        if (!KitchenGameManager.instance.IsGamePlaying())
+        {
+            return;
+        }
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
         }
 
     }
-
     /// <summary>
     /// 交互事件回调：当玩家按下交互键时，与当前选中的柜台进行交互。
     /// </summary>
     private void OnInteractAction(object sender,System.EventArgs e)
     {
+        if (!KitchenGameManager.instance.IsGamePlaying())
+        {
+            return;
+        }
         if (selectedCounter != null)
         {
             selectedCounter.Interact(this);

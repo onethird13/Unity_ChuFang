@@ -27,7 +27,7 @@ public class SoundManager : MonoBehaviour
 
    public void PlayFootStepSound(Vector3 position,float volume)
    {
-      Debug.Log($"Footstep clips: {clipRefsSO.footStep.Length}, pos: {position}, volume: {volume}");
+      /*Debug.Log($"Footstep clips: {clipRefsSO.footStep.Length}, pos: {position}, volume: {volume}");*/
       PlaySoundArray(clipRefsSO.footStep,position,volume);
    }
 
