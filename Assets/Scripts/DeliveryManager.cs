@@ -20,6 +20,8 @@ public class DeliveryManager : MonoBehaviour
     private float spawnTimerMax;
     private float recipeDeliveredAmount;
 
+    
+
     private void Awake()
     {
         recipeDeliveredAmount = 0;

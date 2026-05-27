@@ -9,14 +9,31 @@ public class GameInput : MonoBehaviour
    private PlayerInputAction playerInputAction;
    public event EventHandler OnInteractAction;
    public event EventHandler OnInteractAlternateAction;
- 
+   public event EventHandler OnPauseAction;
+   
+   public static GameInput instance{get; private set;}
+   
    private void Awake()
    {
+      instance = this;
       playerInputAction = new PlayerInputAction();
       playerInputAction.Enable();
       playerInputAction.Player.Interact.performed += InteractPerformed;
       playerInputAction.Player.InteractAlternate.performed += InteractAlternate_Performed;
-      
+      playerInputAction.Player.Pause.performed += Pause_Performed;
+   }
+
+   private void OnDestroy()
+   {
+      playerInputAction.Player.Interact.performed -=InteractPerformed;
+      playerInputAction.Player.InteractAlternate.performed-= InteractAlternate_Performed;
+      playerInputAction.Player.Pause.performed -= Pause_Performed;
+      playerInputAction.Dispose();
+   }
+
+   public void Pause_Performed(InputAction.CallbackContext ctx)
+   {
+      OnPauseAction?.Invoke(this, EventArgs.Empty);
    }
 
    private void InteractAlternate_Performed(InputAction.CallbackContext ctx)

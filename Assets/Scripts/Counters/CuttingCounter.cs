@@ -14,6 +14,10 @@ public class CuttingCounter : BaseCounter,IHasProgress
     public event EventHandler onCut;
     private int cuttingProgress;
     public static event EventHandler OnAnyCutting; 
+    public new static   void ResetStaticData()
+    {
+     OnAnyCutting=null;   
+    }
     
     public override void Interact(Player player)
     {
@@ -72,6 +76,7 @@ public class CuttingCounter : BaseCounter,IHasProgress
             cuttingProgress++;
             onCut?.Invoke(this,EventArgs.Empty);
             OnAnyCutting?.Invoke(this, EventArgs.Empty);
+           
             onProgressChange?.Invoke(this, new IHasProgress.OnProgressChangeArgs()
             {
                 progressNormalized = (float)cuttingProgress/(cuttingRecipeSo.maxCuttingProgress)

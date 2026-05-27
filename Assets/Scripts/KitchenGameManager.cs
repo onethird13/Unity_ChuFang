@@ -6,6 +6,8 @@ using UnityEngine;
 public class KitchenGameManager : MonoBehaviour
 {
    public event EventHandler OnStateChanged;
+   public event EventHandler OnGamePaused;
+   public event EventHandler OnGameUnpaused;
    public static KitchenGameManager instance{get; private set;}   
    private enum GameState
    {
@@ -14,12 +16,14 @@ public class KitchenGameManager : MonoBehaviour
       Playing,
       GameOver
    }
+   
 
    private GameState gameState;
    private float waitingToStartTimer = 1f;
    private float countdownTimer = 3f;
    private float playingTimerMax = 20f;
    private float playingTimer;
+   private bool isGamePaused=false;
    
 
    private void Awake()
@@ -27,6 +31,16 @@ public class KitchenGameManager : MonoBehaviour
       playingTimer = 0;
       instance = this;
       gameState=GameState.WaitingToStart;
+   }
+
+   private void Start()
+   {
+      GameInput.instance.OnPauseAction += GameInput_OnPauseAction;
+   }
+
+   private void GameInput_OnPauseAction(object sender, EventArgs e)
+   {
+      TogglePauseGame();
    }
 
    private void Update()
@@ -60,7 +74,7 @@ public class KitchenGameManager : MonoBehaviour
          case GameState.GameOver:
             break;
       }
-      Debug.Log(gameState);
+    
    }
    public bool IsGamePlaying()
    {
@@ -84,4 +98,22 @@ public class KitchenGameManager : MonoBehaviour
    {
       return playingTimer/playingTimerMax;
    }
+
+   public void TogglePauseGame()
+   {
+      if (isGamePaused)
+      {
+         Time.timeScale = 1f;
+         isGamePaused=false;
+         OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+      }
+      else
+      {
+         Time.timeScale = 0f;
+         isGamePaused=true;
+         OnGamePaused?.Invoke(this, EventArgs.Empty);
+      }
+      
+   }
+   
 }
