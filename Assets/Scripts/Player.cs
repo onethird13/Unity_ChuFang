@@ -208,7 +208,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
             //意味着无法移动，此时我们尝试分开向量
             //先试试能否在x轴上移动
             //发出一道射线，如果距离内没有检测到碰撞，返回false，!false就是可以移动，反之亦然
-            canMove =moveDirection.x!=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * 
+            canMove =(moveDirection.x!<=-0.5f || moveDirection.x>=0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * 
                 playerHeight, playerRadius, new Vector3(moveDirection.x,0,0), moveDistance);
             if (canMove)
             {
@@ -220,7 +220,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
             else
             {
                 //无法在x上移动，试试z
-                canMove=moveDirection.z!=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight,
+                canMove=(moveDirection.z<=0.5f || moveDirection.z>=0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight,
                     playerRadius,new Vector3(0, 0, moveDirection.z),moveDistance);
                 if (canMove)
                 {
