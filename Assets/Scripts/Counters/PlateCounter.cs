@@ -32,7 +32,7 @@ public class PlateCounter : BaseCounter
             return;
         }
         spawnPlateTimer += Time.deltaTime;
-        if (spawnPlateTimer >= maxSpawnTime)
+        if (spawnPlateTimer >= maxSpawnTime && KitchenGameManager.instance.IsGamePlaying())
         {
             spawnPlateTimer = 0f;
             OnPlateSpawned?.Invoke(this, EventArgs.Empty);

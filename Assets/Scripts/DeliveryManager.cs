@@ -37,7 +37,7 @@ public class DeliveryManager : MonoBehaviour
             spawnTimer += Time.deltaTime;
         }
       
-        if (spawnTimer >= spawnTimerMax)
+        if (spawnTimer >= spawnTimerMax && KitchenGameManager.instance.IsGamePlaying())
         {
             spawnTimer = 0f;
             RecipeSO waitingRecipeSO = recipeSOList.RecipeSOList[UnityEngine.Random.Range(0, recipeSOList.RecipeSOList.Count)];

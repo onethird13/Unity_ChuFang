@@ -33,6 +33,16 @@ public class SoundManager : MonoBehaviour
       /*Debug.Log($"Footstep clips: {clipRefsSO.footStep.Length}, pos: {position}, volume: {volume}");*/
       PlaySoundArray(clipRefsSO.footStep,position,volume);
    }
+   public void PlayCountDownSound(Vector3 position,float volume)
+   {
+      /*Debug.Log($"Footstep clips: {clipRefsSO.footStep.Length}, pos: {position}, volume: {volume}");*/
+      PlaySoundArray(clipRefsSO.warning,position,volume);
+   }
+   public void PlayWarningSound(Vector3 position,float volume)
+   {
+      /*Debug.Log($"Footstep clips: {clipRefsSO.footStep.Length}, pos: {position}, volume: {volume}");*/
+      PlaySoundArray(clipRefsSO.warning,position,volume);
+   }
 
    private void TrashCounter_OnAnyObjectTrashed(object sender, EventArgs args)
    {

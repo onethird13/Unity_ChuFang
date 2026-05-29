@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class DeliveryCounter  : BaseCounter
 {
+    private bool isSuccess;
     public static DeliveryCounter instance{get; private set;}
+    public event EventHandler<OnDeliveryEventArgs> OnDelivery;
+    public class OnDeliveryEventArgs : EventArgs
+    {
+        public bool isSuccess;
+    }
 
     private void Awake()
     {
@@ -19,7 +25,11 @@ public class DeliveryCounter  : BaseCounter
         {
             //player有kitchen object 并且是 plate
             DeliveryManager.Instance.DeliveryRecipe(plateKitchenObject);
-           
+            OnDelivery?.Invoke(this, new OnDeliveryEventArgs()
+            {
+                isSuccess = true,
+            });
+
         }
     }
 }
