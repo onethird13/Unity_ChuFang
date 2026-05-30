@@ -20,8 +20,8 @@ public class KitchenGameManager : MonoBehaviour
 
    private GameState gameState;
    
-   private float countdownTimer = 3f;
-   private float playingTimerMax = 20f;
+   private float countdownTimer = 1f;
+   private float playingTimerMax = 300f;
    private float playingTimer;
    private bool isGamePaused=false;
    
@@ -37,6 +37,9 @@ public class KitchenGameManager : MonoBehaviour
    {
       GameInput.instance.OnPauseAction += GameInput_OnPauseAction;
       GameInput.instance.OnInteractAction += OnInteractAction_GameInput;
+      //debug 游戏直接启动
+      gameState = GameState.CountdownToStart;
+      OnStateChanged?.Invoke(this, EventArgs.Empty);
    }
 
    private void OnInteractAction_GameInput(object sender, EventArgs args)
