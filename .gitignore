@@ -11,9 +11,14 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/_Build/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
+
+# Local font import, kept out of git because the generated SDF/font files are large.
+/[Aa]ssets/[Ff]ont/
+/[Aa]ssets/[Ff]ont.meta
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
