@@ -13,7 +13,24 @@ public class SelectedCounterVisual : MonoBehaviour
     
     private void Start()
     {
-        /*Player.instance.onSelectedCounterChanged += Player_OnSeclectedCounterChanged;*/
+        if (Player.LocalInstance != null)
+        {
+            Player.LocalInstance.onSelectedCounterChanged += Player_OnSeclectedCounterChanged;
+        }
+        else
+        {
+            Player.OnAnyPlayerSpawned += Player_OnAnyPlayerSpawned;
+        }
+    }
+
+    private void Player_OnAnyPlayerSpawned(object sender, EventArgs e)
+    {
+        if (Player.LocalInstance != null)
+        {
+            Player.LocalInstance.onSelectedCounterChanged -= Player_OnSeclectedCounterChanged;
+            Player.LocalInstance.onSelectedCounterChanged += Player_OnSeclectedCounterChanged;
+            
+        }
     }
 
     private void Player_OnSeclectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs args)

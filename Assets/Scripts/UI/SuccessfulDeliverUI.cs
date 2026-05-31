@@ -8,6 +8,7 @@ public class SuccessfulDeliverUI : MonoBehaviour
 {
     [SerializeField] private DeliveryCounter deliveryCounter;
     [SerializeField]private Image image;
+    [SerializeField]private Image imageError;
 
     private float showTimer;
     private float showtimeMax;
@@ -16,8 +17,10 @@ public class SuccessfulDeliverUI : MonoBehaviour
     private void Start()
     {
         
-        deliveryCounter.OnDelivery += deliveryCounter_OnDelivery;
+        DeliveryManager.Instance.OnRecipeSuccessed+=DeliveryManager_OnRecipeSuccessed;
+        DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
         image.gameObject.SetActive(false);
+        imageError.gameObject.SetActive(false);
         showtimeMax = 2f;
         showTimer = showtimeMax;
     }
@@ -33,21 +36,21 @@ public class SuccessfulDeliverUI : MonoBehaviour
         {
             showTimer = showtimeMax;
             image.gameObject.SetActive(false);
+            imageError.gameObject.SetActive(false);
             isSrartToCountTime = false;
         }
     }
 
-    private void deliveryCounter_OnDelivery(object sender, DeliveryCounter.OnDeliveryEventArgs e)
+    private void DeliveryManager_OnRecipeSuccessed(object sender, EventArgs e)
     {
-        if (e.isSuccess)
-        {
+        
             image.gameObject.SetActive(true);
             isSrartToCountTime = true;
-        }
-        else
-        {
-            image.gameObject.SetActive(false);
-            isSrartToCountTime = false;
-        }
+    }
+
+    private void DeliveryManager_OnRecipeFailed(object sender, EventArgs e)
+    {
+        imageError.gameObject.SetActive(true);
+        isSrartToCountTime=true;
     }
 }

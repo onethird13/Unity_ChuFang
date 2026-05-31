@@ -12,15 +12,14 @@ using UnityEngine.Serialization;
 /// </summary>
 public class Player : NetworkBehaviour,IKitchenObjectParent
 {
-  
-
-   
     public event EventHandler OnPickup; 
     
+    
+    public static event EventHandler OnAnyPlayerSpawned;
     /// <summary>
     /// 单例实例，方便全局访问玩家对象。
     /// </summary>
-    public static Player instance{get;private set;}
+    public static Player LocalInstance{get;private set;}
 
     /// <summary>
     /// 玩家移动速度。
@@ -78,6 +77,15 @@ public class Player : NetworkBehaviour,IKitchenObjectParent
         /*instance = this;*/
     }
 
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            LocalInstance = this;
+            OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     /// <summary>
     /// 初始化玩家速度和输入事件监听。
     /// </summary>
@@ -89,6 +97,10 @@ public class Player : NetworkBehaviour,IKitchenObjectParent
         GameInput.instance.OnInteractAlternateAction += OnInteractAlternateAction;
     }
 
+    public static void ResetStaticData()
+    {
+        OnAnyPlayerSpawned = null;
+    }
     private void OnInteractAlternateAction(object sender,EventArgs args)
     {
         if (!KitchenGameManager.instance.IsGamePlaying())

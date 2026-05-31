@@ -30,7 +30,6 @@ public class KitchenGameManager : MonoBehaviour
    {
       playingTimer = 0;
       instance = this;
-      gameState=GameState.WaitingToStart;
    }
 
    private void Start()
@@ -38,13 +37,13 @@ public class KitchenGameManager : MonoBehaviour
       GameInput.instance.OnPauseAction += GameInput_OnPauseAction;
       GameInput.instance.OnInteractAction += OnInteractAction_GameInput;
       //debug 游戏直接启动
-      gameState = GameState.CountdownToStart;
+      gameState = GameState.Playing;
       OnStateChanged?.Invoke(this, EventArgs.Empty);
    }
 
    private void OnInteractAction_GameInput(object sender, EventArgs args)
    {
-      gameState = GameState.CountdownToStart;
+      gameState = GameState.Playing;
       OnStateChanged?.Invoke(this, EventArgs.Empty);
    }
 
@@ -55,6 +54,7 @@ public class KitchenGameManager : MonoBehaviour
 
    private void Update()
    {
+      Debug.Log(gameState);
       switch (gameState)
       {
          case GameState.WaitingToStart:
